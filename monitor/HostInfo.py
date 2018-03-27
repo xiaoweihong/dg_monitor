@@ -10,10 +10,10 @@ import requests
 prometheusIp = 'http://192.168.2.158:9090'
 
 DiskInfoUrl = prometheusIp + '/api/v1/query?query=HostInfo:Disk_usage'
-MemInfoUrl = prometheusIp + '/api/v1/query?query=HostInfo:Memory_used'
+MemInfoUrl = prometheusIp + '/api/v1/query?query=HostInfo:Mem_used'
 GpuInfoUrl = prometheusIp + '/api/v1/query?query=HostInfo:GPU_utilization_pct'
 GpuMemUrl = prometheusIp + '/api/v1/query?query=HostInfo:GPU_mem_used'
-Net_receive_Url = prometheusIp + '/api/v1/query?query=HostInfo:node_network_recive'
+Net_receive_Url = prometheusIp + '/api/v1/query?query=HostInfo:node_network_receive'
 Net_transmit_Url = prometheusIp + '/api/v1/query?query=HostInfo:node_network_transmit'
 
 class GetInfos:

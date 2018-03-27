@@ -9,7 +9,11 @@ import json
 import xlwt
 #from monitor.GetHostInfo import GetInfos
 from HostInfo import GetInfos
-
+import time
+localTime = time.localtime(time.time())
+#strTime = time.strftime("%Y%m%d%H%M%S", localTime)
+strTime = time.strftime("%Y%m%d", localTime)
+filename=strTime+'.xls'
 book=xlwt.Workbook(encoding='utf-8',style_compression=0)
 
 sheet1=book.add_sheet('主机信息',cell_overwrite_ok=True)
@@ -140,8 +144,8 @@ print("正在导出显存使用信息....")
 for row in range(len(gpu_mem_content)):
     for col in range(0,len(gpu_mem_content[row])):
         sheet4.write(row+1,col,list(gpu_mem_content[row][col]))
-print("正在导出网卡接收数据信息....")
 
+print("正在导出网卡接收数据信息....")
 for row in range(len(network_receive_content)):
     for col in range(0,len(network_receive_content[row])):
         sheet5.write(row+1,col,list(network_receive_content[row][col]))
@@ -151,4 +155,4 @@ for row in range(len(network_transmit_content)):
     for col in range(0,len(network_transmit_content[row])):
         sheet6.write(row+1,col,list(network_transmit_content[row][col]))
 
-book.save('../test.xls')
+book.save('../'+filename)
