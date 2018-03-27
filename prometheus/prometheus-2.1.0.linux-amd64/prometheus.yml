@@ -1,0 +1,40 @@
+global:
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+rule_files:
+  - "rules/HostInfo.yml"
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['192.168.2.158:9090']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['192.168.2.158:9100']
+      - targets: ['192.168.2.231:9100']
+      - targets: ['192.168.2.232:9100']
+
+#  - job_name: 'kafka_jmx_exporter'
+#    static_configs:
+#      - targets: ['192.168.2.158:9990']
+
+  - job_name: 'kafka_jmx_exporter'
+    static_configs:
+      - targets: ['192.168.2.158:9308']
+      - targets: ['192.168.2.231:9308']
+      - targets: ['192.168.2.232:9308']
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['192.168.2.158:3000']
+      - targets: ['192.168.2.231:3000']
+      - targets: ['192.168.2.232:3000']
+
+  - job_name: 'nvidia_exporter'
+    metrics_path: "/"
+    static_configs:
+      - targets: ['192.168.2.158:9101']
+      - targets: ['192.168.2.231:9101']
+      - targets: ['192.168.2.232:9101']
