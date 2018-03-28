@@ -22,7 +22,7 @@ filename='../'+strTime+'.xls'
 asender = 'a403828237@126.com'
 # 多个收件人用逗号隔开
 #areceiver = 'bb@bb.com, cc@cc.com'
-areceiver = 'xiaoweihong@deepglint.com,'
+areceiver = 'a403828237@126.com,'
 #acc = 'dd@dd.com, eeg@ee.com'
 asubject = u'曲靖服务器信息测试'+strTime
 

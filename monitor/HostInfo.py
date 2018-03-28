@@ -22,33 +22,35 @@ class GetInfos:
 
     def getDiskInfo(self):
         DiskInfo=requests.get(DiskInfoUrl)
-        #print(DiskInfo.json())
         return DiskInfo.json()
 
     def getMemInfo(self):
         MemInfo=requests.get(MemInfoUrl)
-        #print(MemInfo.json())
         return MemInfo.json()
 
     def getGpuUtil(self):
         GpuInfo=requests.get(GpuInfoUrl)
-        #print(GpuInfo.json())
         return GpuInfo.json()
 
 
     def getGpuMemInfo(self):
         GpuMemInfo=requests.get(GpuMemUrl)
-        #print(GpuMemInfo.json())
         return GpuMemInfo.json()
 
 
     def getNetworkReceive(self):
         Network_receiveInfo=requests.get(Net_receive_Url)
-        #print(Network_receiveInfo.json())
         return Network_receiveInfo.json()
 
     def getNetworkTransmit(self):
         Network_transmitInfo=requests.get(Net_transmit_Url)
-        #print(Network_transmitInfo.json())
         return Network_transmitInfo.json()
+
+    def getTitle(self,titleInfo):
+        title_temp = titleInfo[0]['metric']
+        title_content=[]
+        for title in title_temp:
+            title_content.append(title)
+        title_content.append('value')
+        return title_content
 

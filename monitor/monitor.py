@@ -5,9 +5,7 @@
 # @Site : 
 # @File : monitor.py
 # @Software: PyCharm
-import json
 import xlwt
-#from monitor.GetHostInfo import GetInfos
 from HostInfo import GetInfos
 import time
 localTime = time.localtime(time.time())
@@ -37,38 +35,37 @@ gpu_mem_content=[]
 network_receive_content=[]
 network_transmit_content=[]
 
-disk_table_title=['__name__', 'device', 'fstype', 'instance', 'job', 'mountpoint','value']
-mem_table_title=['__name__', 'instance', 'job', 'value']
-gpu_table_title=['__name__','device', 'instance', 'job', 'value']
-gpu_mem_table_title=['__name__','device', 'instance', 'job', 'value']
-network_receive_table_title=['__name__','device', 'instance', 'job', 'value']
-network_transmit_table_title=['__name__','device', 'instance', 'job', 'value']
+#disk_table_title=['__name__', 'device', 'fstype', 'instance', 'job', 'mountpoint','value']
+#mem_table_title=['__name__', 'instance', 'job', 'value']
+#gpu_table_title=['__name__','device', 'instance', 'job', 'value']
+#gpu_mem_table_title=['__name__','device', 'instance', 'job', 'value']
+#network_receive_table_title=['__name__','device', 'instance', 'job', 'value']
+#network_transmit_table_title=['__name__','device', 'instance', 'job', 'value']
 
-#json_disk_info=json.loads(DiskInfo)
-#print(type(json_disk_info))
-#json_mem_info=json.loads(MemInfo)
-#json_gpu_info=json.loads(GpuInfo)
-#json_gpu_mem_info=json.loads(GpuMem)
-#json_network_receive_info=json.loads(Network_receive)
-#json_network_transmit_info=json.loads(Network_transmit)
 
 json_disk_info=GetInfos().getDiskInfo()
 disk_infos=json_disk_info['data']['result']
+disk_table_title=GetInfos().getTitle(disk_infos)
 
 json_mem_info=GetInfos().getMemInfo()
 mem_infos=json_mem_info['data']['result']
+mem_table_title=GetInfos().getTitle(mem_infos)
 
 json_gpu_info=GetInfos().getGpuUtil()
 gpu_infos=json_gpu_info['data']['result']
+gpu_table_title=GetInfos().getTitle(gpu_infos)
 
 json_gpu_mem_info=GetInfos().getGpuMemInfo()
 gpu_mem_infos=json_gpu_mem_info['data']['result']
+gpu_mem_table_title=GetInfos().getTitle(gpu_mem_infos)
 
 json_network_receive_info=GetInfos().getNetworkReceive()
 network_receive_infos=json_network_receive_info['data']['result']
+network_receive_table_title=GetInfos().getTitle(network_receive_infos)
 
 json_network_transmit_info=GetInfos().getNetworkTransmit()
 network_transmit_infos=json_network_transmit_info['data']['result']
+network_transmit_table_title=GetInfos().getTitle(network_transmit_infos)
 
 
 for i in range(len(disk_table_title)):
@@ -89,41 +86,37 @@ for info in disk_infos:
     value=info['value']
     hostInfo['value']=value[1]
     disk_content.append(list(hostInfo.values()))
-#print(disk_content)
 
 for info in mem_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo['value']=value[1]
     mem_content.append(list(hostInfo.values()))
-#print(mem_content)
 
 for info in gpu_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo['value']=value[1]
     gpu_content.append(list(hostInfo.values()))
-#print(gpu_content)
+
+
 for info in gpu_mem_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo['value']=value[1]
     gpu_mem_content.append(list(hostInfo.values()))
-#print(gpu_mem_content)
 
 for info in network_receive_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo['value']=value[1]
     network_receive_content.append(list(hostInfo.values()))
-#print(gpu_mem_content)
 
 for info in network_transmit_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo['value']=value[1]
     network_transmit_content.append(list(hostInfo.values()))
-#print(network_transmit_content)
 
 print("正在导出disk信息....")
 for row in range(len(disk_content)):
