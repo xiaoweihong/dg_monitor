@@ -81,14 +81,15 @@ for info in disk_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo = OrderedDict(hostInfo)
-    hostInfo['value']=value[1]
+    hostInfo['value']=value[1]+"%"
     disk_content.append(list(hostInfo.values()))
+print(disk_content)
 
 for info in mem_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo = OrderedDict(hostInfo)
-    hostInfo['value']=value[1]
+    hostInfo['value']=value[1]+"%"
     mem_content.append(list(hostInfo.values()))
 
 for info in gpu_infos:
@@ -110,14 +111,14 @@ for info in network_receive_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo = OrderedDict(hostInfo)
-    hostInfo['value']=value[1]
+    hostInfo['value']=value[1]+"GB"
     network_receive_content.append(list(hostInfo.values()))
 
 for info in network_transmit_infos:
     hostInfo = info['metric']
     value=info['value']
     hostInfo = OrderedDict(hostInfo)
-    hostInfo['value']=value[1]
+    hostInfo['value']=value[1]+"GB"
     network_transmit_content.append(list(hostInfo.values()))
 
 print("正在导出disk信息....")
