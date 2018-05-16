@@ -8,14 +8,18 @@
 import xlwt
 from HostInfo import GetInfos
 from ExcleStyle import Excle_tool
+from DeepDataPgInfo import  DeepVideoPostgresTool
 from collections import OrderedDict
 import time
 localTime = time.localtime(time.time())
+database="deepdata_v6"
+host="192.168.2.158"
 #strTime = time.strftime("%Y%m%d%H%M%S", localTime)
 strTime = time.strftime("%Y%m%d", localTime)
 filename=strTime+'.xls'
 book=xlwt.Workbook(encoding='utf-8',style_compression=0)
 
+sheet0=book.add_sheet('数据统计',cell_overwrite_ok=True)
 sheet1=book.add_sheet('主机信息',cell_overwrite_ok=True)
 sheet2=book.add_sheet('内存信息',cell_overwrite_ok=True)
 sheet3=book.add_sheet('GPU使用率',cell_overwrite_ok=True)
@@ -31,7 +35,8 @@ gpu_mem_content=[]
 network_receive_content=[]
 network_transmit_content=[]
 
-
+data_table_info=DeepVideoPostgresTool(database=database,host=host).getDeepDataInfo()
+data_table_title=["机动车","非机动车","行人"]
 
 json_disk_info=GetInfos().getDiskInfo()
 disk_infos=json_disk_info['data']['result']
@@ -58,21 +63,30 @@ network_transmit_infos=json_network_transmit_info['data']['result']
 network_transmit_table_title=GetInfos().getTitle(network_transmit_infos)
 
 
+for i in range(len(data_table_title)):
+    sheet0.col(i).width=256*30
+    sheet0.write(0,i,data_table_title[i],Excle_tool().def_style(320))
+
 for i in range(len(disk_table_title)):
     sheet1.col(i).width=256*30
     sheet1.write(0,i,disk_table_title[i],Excle_tool().def_style(320))
+
 for i in range(len(mem_table_title),):
     sheet2.col(i).width=256*30
     sheet2.write(0,i,mem_table_title[i],Excle_tool().def_style(320))
+
 for i in range(len(gpu_table_title)):
     sheet3.col(i).width=256*30
     sheet3.write(0,i,gpu_table_title[i],Excle_tool().def_style(320))
+
 for i in range(len(gpu_mem_table_title)):
     sheet4.col(i).width=256*30
     sheet4.write(0,i,gpu_mem_table_title[i],Excle_tool().def_style(320))
+
 for i in range(len(network_receive_table_title)):
     sheet5.col(i).width=256*30
     sheet5.write(0,i,network_receive_table_title[i],Excle_tool().def_style(320))
+
 for i in range(len(network_transmit_table_title)):
     sheet6.col(i).width=256*30
     sheet6.write(0,i,network_transmit_table_title[i],Excle_tool().def_style(320))
@@ -120,6 +134,11 @@ for info in network_transmit_infos:
     hostInfo = OrderedDict(hostInfo)
     hostInfo['value']=value[1]+"GB"
     network_transmit_content.append(list(hostInfo.values()))
+
+print("正在导出数据信息....")
+print(list(data_table_info.values()))
+for row in range(len(list(data_table_info.values()))):
+    sheet0.write(1,row,list(data_table_info.values())[row],Excle_tool().def_style(320,False))
 
 print("正在导出disk信息....")
 for row in range(len(disk_content)):
