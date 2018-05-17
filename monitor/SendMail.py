@@ -22,14 +22,14 @@ filename='../'+strTime+'.xls'
 asender = 'a403828237@126.com'
 # 多个收件人用逗号隔开
 #areceiver = 'bb@bb.com, cc@cc.com'
-areceiver = 'a403828237@126.com,'
+areceiver = 'xiaoweihong@deepglint.com,'
 #acc = 'dd@dd.com, eeg@ee.com'
 asubject = u'曲靖服务器信息测试'+strTime
 
-# 阿里云邮箱的smtp服务器
+# 网易邮箱的smtp服务器
 asmtpserver = 'smtp.126.com'
 ausername = 'a403828237@126.com'
-apassword = 'dg2017'
+apassword = 'dg2016'
 
 # 下面的to\cc\from最好写上，不然只在sendmail中，可以发送成功，但看不到发件人、收件人信息
 msgroot = MIMEMultipart('related')

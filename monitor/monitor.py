@@ -37,6 +37,7 @@ network_transmit_content=[]
 
 data_table_info=DeepVideoPostgresTool(database=database,host=host).getDeepDataInfo()
 data_table_title=["机动车","非机动车","行人"]
+print(data_table_info)
 
 json_disk_info=GetInfos().getDiskInfo()
 disk_infos=json_disk_info['data']['result']

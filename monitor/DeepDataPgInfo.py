@@ -6,6 +6,7 @@
 # @File : DeepDataPgInfo.py
 # @Software: PyCharm
 import psycopg2
+import datetime
 
 class DeepVideoPostgresTool:
     def __init__(self,database,host):
@@ -22,7 +23,8 @@ class DeepVideoPostgresTool:
     def getVehicle(self):
         conn=self.getConnect()
         cur=conn.cursor()
-        cur.execute("SELECT COUNT(*) FROM VEHICLES")
+        sql="SELECT COUNT(*) FROM VEHICLES WHERE uts > '{}' AND uts< '{}' ".format(self.getYesterday(),self.getToday())
+        cur.execute(sql)
         vehicles=cur.fetchall()
         conn.close()
         return vehicles
@@ -30,7 +32,8 @@ class DeepVideoPostgresTool:
     def getNonmontor(self):
         conn=self.getConnect()
         cur=conn.cursor()
-        cur.execute("SELECT COUNT(*) FROM NONMOTORS")
+        sql="SELECT COUNT(*) FROM nonmotors WHERE uts > '{}' AND uts< '{}' ".format(self.getYesterday(),self.getToday())
+        cur.execute(sql)
         nonmotors=cur.fetchall()
         conn.close()
         return nonmotors
@@ -38,7 +41,8 @@ class DeepVideoPostgresTool:
     def getPedestrians(self):
         conn=self.getConnect()
         cur=conn.cursor()
-        cur.execute("SELECT COUNT(*) FROM PEDESTRIANS")
+        sql="SELECT COUNT(*) FROM pedestrians WHERE uts > '{}' AND uts< '{}' ".format(self.getYesterday(),self.getToday())
+        cur.execute(sql)
         pedestrians=cur.fetchall()
         conn.close()
         return pedestrians
@@ -50,9 +54,23 @@ class DeepVideoPostgresTool:
         deepdata["pedestrians"]=self.getPedestrians()[0][0]
         return deepdata
 
+
+    def getYesterday(self):
+        today = datetime.date.today()
+        oneday = datetime.timedelta(days=1)
+        yesterday = today - oneday
+        return yesterday
+
+    def getToday(self):
+        today = datetime.date.today()
+        return today
+
+
 if __name__=='__main__':
     pg=DeepVideoPostgresTool(database='deepdata_v6',host="192.168.2.158")
     print(pg.getVehicle()[0][0])
     print(pg.getNonmontor())
     print(pg.getPedestrians())
     print(pg.getDeepDataInfo())
+    print(pg.getYesterday())
+    print(pg.getToday())

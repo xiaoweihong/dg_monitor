@@ -6,6 +6,9 @@
 # @File : testtime.py
 # @Software: PyCharm
 import time
+import datetime
+
+print(time.time())
 
 localTime = time.localtime(time.time())
 strTime = time.strftime("%Y-%m-%d", localTime)
