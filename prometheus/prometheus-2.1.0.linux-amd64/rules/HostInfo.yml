@@ -4,22 +4,22 @@ groups:
 
     rules:
     - record: HostInfo:Disk_usage
-      expr: 100 - 100 * node_filesystem_avail{mountpoint=~"/data|/"} / node_filesystem_size
+      expr: round(100 - 100 * node_filesystem_avail{mountpoint=~"/data|/"} / node_filesystem_size)
 
 
     - record: HostInfo:Mem_used
-      expr: 1-(node_memory_Buffers+node_memory_Cached+node_memory_MemFree)/node_memory_MemTotal 
+      expr: round(100 * (1-(node_memory_Buffers+node_memory_Cached+node_memory_MemFree)/node_memory_MemTotal))
 
     - record: HostInfo:GPU_utilization_pct
-      expr: gpu_utilization_pct 
+      expr: gpu_utilization_pct
 
     - record: HostInfo:GPU_mem_used
-      expr: gpu_used_fb_memory_mb/1024/1024 
+      expr: round(gpu_used_fb_memory_mb/1024/1024)
 
 
     - record: HostInfo:node_network_receive
-      expr: node_network_receive_bytes{device!~'lo|docker0'}/1024/1024/1024 
+      expr: round(node_network_receive_bytes{device!~'lo|docker0'}/1024/1024/1024)
 
 
     - record: HostInfo:node_network_transmit
-      expr: node_network_transmit_bytes{device!~'lo|docker0'}/1024/1024/1024 
+      expr: round(node_network_transmit_bytes{device!~'lo|docker0'}/1024/1024/1024)
